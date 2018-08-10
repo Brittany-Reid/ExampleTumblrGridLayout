@@ -1,4 +1,5 @@
-# Tumblr-Masonry-ImagesLoaded-InfiniteScroll-Code
+# Example Tumblr Grid Layout
+
 Backup of my JS implementation of Masonry and InfiniteScroll combined with ImagesLoaded for tumblr theme creation.
 
 Uses Photoset Grid to handle quirks with tumblr's default way of handling photoset posts.
