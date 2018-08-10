@@ -4,6 +4,8 @@ This repository provides a template and tutorial for building grid layouts for t
 
 The template is open source, feel free to use as you wish!
 
+You can find an implementation of this template at: https://examplegridtheme.tumblr.com/
+
 ## The Issue
 The standard Masonry + imagesLoaded implementation doesn't play nice with tumblr's photoset post type. By default, photosets are iframes of varying layouts, and while imagesLoaded fixes issues with loading images throwing off our layouts, it can't help us with the images inside these iframes.
 
