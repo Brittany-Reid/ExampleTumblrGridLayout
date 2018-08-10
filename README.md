@@ -11,6 +11,10 @@ The standard Masonry + imagesLoaded implementation doesn't play nice with tumblr
 
 ## Credit
 Masonry - https://masonry.desandro.com
+
 Infinite Scrolling - https://infinite-scroll.com/
+
 ImagesLoaded - https://imagesloaded.desandro.com/
+
 Photoset Grid - http://stylehatch.github.io/photoset-grid/
+
