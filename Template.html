@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8"> 
+    <head>
+        <!--PAGE INGO-->
+        <title>Example Masonry Implementation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        
+         <!--SCRIPTS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+        <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+        <script src="http://static.tumblr.com/wgijwsy/jgemkyt9x/jquery.photoset-grid.min.js"></script>
+        
+        <!--CSS-->
+        <style type="text/css">
+            
+             html, body{
+                margin:0;
+                padding:0;
+                width:100%;
+                height:100%;
+            }
+            
+            h1{
+                text-align: center;
+                font-family:sans-serif;
+            }
+            
+            h2{
+                font-family:sans-serif;
+                margin-top:0px;
+            }
+            
+            #container{
+                width: 100%;
+                max-width:1000px;
+                right: 0;
+                left: 0;
+                margin: auto;
+                top:0;
+                margin-top: 20px;
+                padding-bottom:50px;
+                min-height: calc(100% - 125px);
+                position:relative;
+                z-index:3;
+                overflow:hidden;
+                background-color: #eeeeee;
+            }
+            
+            #content{
+                left:0;
+                right:0;
+                margin:auto;
+                min-height:100% !important;
+                overflow:hidden;
+                transition: 0.5s ease-in-out;
+                background-color: #dddddd;
+                border: 5px dashed #000;
+            }
+            
+            .posts{
+                width:300px;
+                max-width:100%;
+                background-color: #fff;
+                margin-bottom: 10px;
+                word-wrap: break-word;
+                opacity:1;
+                transition: 0.8s ease-in-out;
+                padding: 10px 10px;
+            }
+            
+            .posts img{
+                width: 100%;
+            }
+            
+            .video iframe#youtube_iframe{
+                width:300px;
+                min-height: 150px;
+            }
+            
+            .audio_container{
+                overflow:hidden;
+                position:relative;
+                width:100%
+            }
+            
+            .grid .soundcloud_audio_player,.grid .spotify_audio_player{
+                height:300px;
+            }
+            
+            .soundcloud_audio_player,.spotify_audio_player{
+                width:100%;
+            }
+            
+            .tumblr_audio_player{
+                width:100%;
+                box-sizing:border-box
+            }
+            
+            .page-load-status{
+                text-align:center;
+                font-size: 14px;
+                font-family:sans-serif;
+            }
+            
+            .infinite-scroll-request{
+                position: fixed;
+                top: calc(50% - 35px);
+                left: 0;
+                right: 0;
+                z-index:999;
+                width: 70px;
+                margin: auto;
+            }
+            
+            .infinite-scroll-request img{
+                width: 50px;
+                height: 50px;
+                background-color: #fff;
+                padding: 10px;
+                opacity: 0.6;
+            }
+            
+            .infinite-scroll-last, .infinite-scroll-error{
+                padding: 10px;
+                color:#333333;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: calc(100% - 100px);
+                min-width: 280px;
+            }
+            
+             .infinite-scroll-request, .infinite-scroll-last, .infinite-scroll-error{
+                display:none;
+                opacity:0;
+                transition: 0.3s ease-in-out;
+            }
+            
+            footer{
+                position:fixed;
+                bottom:0px;
+                width:100%;
+                height:30px;
+                z-index:9;
+                background-color: #cccccc;
+                font-family:sans-serif;
+            }
+            
+            #pagination{
+                width:100%;
+            }
+            
+            a.pageButton{
+                padding: 10px;
+                border: 1px #333333 solid;
+                background-color:#fff;
+                position: fixed;
+                bottom: 0;
+                margin: 0px 5px 35px 5px;
+            }
+            
+            a.pageButton:hover{
+                background-color:#333333;
+                color:#fff;
+            }
+            
+            a#nextPage{
+                right:0;
+            }
+            
+            .copyright{
+                text-align:center;
+                padding-top: 5px;
+            }
+            
+            .hidden{
+                opacity: 0;
+                z-index:1;
+            }
+            
+        
+        </style>
+        
+    </head>
+    
+    <!--HTML-->
+    <body>
+        
+        <h1>Example Masonry Implementation</h1>
+        
+        <!--POSTS-->
+        <div id="container">
+        
+            <div id="content" class="gridcont">
+            
+                {block:Posts}
+                
+                <div class="posts grid hidden">
+                
+                    {block:text}
+                        {block:Title}
+                            <h2>{Title}</h2>
+                        {/block:Title}
+                        {Body}
+                    {/block:text}
+                    
+                    {block:photo}
+                        {LinkOpenTag}
+                        <img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
+                        {LinkCloseTag}
+                    {/block:photo}
+                    
+                    {block:Photoset}
+                        <div class="photoset" data-layout="{PhotosetLayout}">
+                            {block:Photos}
+                                <img src="{PhotoURL-500}">
+                            {/block:Photos}
+                        </div>
+                    {/block:Photoset}
+                    
+                    {block:Link}
+                        <h2 class="linkp">
+                            <a href="{URL}" {Target}>{Name} ></a>
+                        </h2>
+                        {block:Description}
+                            {Description}
+                        {/block:Description}
+                    {/block:Link}
+                    
+                    {block:Video}
+                        <div class="video">
+                            {Video-250}
+                        </div>
+                            
+                        {block:Caption}
+                            {Caption}
+                        {/block:Caption}
+                    {/block:Video}
+                    
+                    {block:Quote}
+                        "{Quote}"
+                                        
+                        {block:Source}
+                            -- {Source}
+                        {/block:Source}
+                    {/block:Quote}
+                    
+                    {block:Chat}
+                        {block:Title}
+                            <h2>{Title}</h2>
+                        {/block:Title}
+                        
+                        <ul>
+                            {block:Lines}
+                            <li>
+                                {block:Label}
+                                    <span>{Label}</span>
+                                {/block:Label} 
+                                {Line}
+                            </li>
+                            {/block:Lines}
+                        </ul>
+                    {/block:Chat}
+                        
+                    {block:Audio}
+                        <div class="audio_container">
+                            {block:AudioEmbed}
+                                {AudioEmbed color="white"}
+                            {/block:AudioEmbed}
+                        </div>
+                        
+                        {block:Caption}
+                            {Caption}
+                        {/block:Caption}
+                    {/block:Audio}
+                        
+                    {block:Answer}
+                            <p>{Asker} asked: {Question}</p>
+                    
+                        {block:Answerer}
+                            {Answer}
+                        {/block:Answerer}
+                        
+                        {Replies}
+                    {/block:Answer}
+                    
+                </div>
+                    
+                {/block:Posts}
+                
+            </div>
+            
+            <!--LOAD STATUS-->
+            <div class="page-load-status">
+              <p class="infinite-scroll-request"><img src="https://static.tumblr.com/g0zo3qh/nKep4z137/giphy.gif" alt="Loading..."></p>
+              <p class="infinite-scroll-last">That's it!</p>
+              <p class="infinite-scroll-error">Something went wrong :(</p>
+            </div>
+            
+        </div>
+        
+        <footer>
+            {block:IndexPage}
+                {block:Pagination}
+                        <div id="pagination">
+                            {block:PreviousPage}
+                                <a id="previousPage" class="pageButton" href="{PreviousPage}">PREVIOUS</a>
+                            {/block:PreviousPage}
+                            {block:NextPage}
+                                <a id="nextPage" class="pageButton" href="{NextPage}">NEXT</a>
+                            {/block:NextPage}
+                        </div>
+                {/block:Pagination}
+            {/block:IndexPage}
+            <div class="copyright">
+                Copyright {name} {CopyrightYears}
+            </div>
+        </footer>
+        
+    </body>
+    <!--SCRIPT-->
+    <script>
+        //define hide loading function
+        function hideLoading() {
+            //hide loading
+            $('.infinite-scroll-request').css({'opacity' : '0'});
+            //wait
+            setTimeout(function() {
+                $('.infinite-scroll-request').css({'display' : 'none'});
+            }, 300);
+        };
+        
+        //show loading
+        $('.infinite-scroll-request').css({'display' : 'block', 'opacity' : '1'});
+    
+    
+            //initialize masonry
+        var $grid = $('.gridcont').masonry({
+            itemSelector: '.grid',
+            gutter: 10,
+            {block:IndexPage}
+            horizontalOrder: true,
+            {/block:IndexPage}
+            {block:PermalinkPage}
+            horizontalOrder: false,
+            {/block:PermalinkPage}
+            fitWidth: true,
+            transitionDuration: '0',
+            initLayout: false
+        });
+            
+        //layout code for first page once images load
+        $grid.imagesLoaded( function() {
+            //reveal once layout complete
+            $grid.masonry( 'once', 'layoutComplete', function() {
+                hideLoading();
+                $('.grid').removeClass('hidden');
+            });
+            //then run photosetGrid on any photosets
+            $('.photoset').photosetGrid({
+                gutter: '5px',
+                //when done, layout
+                onComplete: function(){msnry.layout();}
+            });
+            //layout again, failsafe
+            $grid.masonry('layout');
+        });
+        
+        // get Masonry instance
+        var msnry = $grid.data('masonry');
+        
+        //initialize infinitescroll
+        $grid.infiniteScroll({
+            path: '#pagination a#nextPage',
+            hideNav: '#pagination',
+            history: false
+            //no outlayer or append options, we'll do this manually
+            //no status, again manually
+        });
+            
+        //display load on request
+        $grid.on( 'request.infiniteScroll', function( event, path ) {
+            $('.infinite-scroll-request').css({'display' : 'block', 'opacity' : '1'});
+        });
+            
+        //append and layout code for when infinite scroll loads
+        $grid.on( 'load.infiniteScroll', function( event, response, path ) {
+        //get items from response
+        var $items = $(response).find('.grid');
+            //add to page
+            $grid.append($items);
+            //want to keep items hidden even if hidden class removed
+            $items.css({"opacity" : "0"});
+            //wait for images to load
+            $grid.imagesLoaded( function() {
+                //add items to masonry
+                $grid.masonry( 'addItems', $items );
+                //photoset code
+                $('.photoset').photosetGrid({
+                    gutter: '5px',
+                    onComplete: function(){msnry.layout();} //layout
+                });
+                //layout again
+                $grid.masonry('layout');
+                //hide loading now
+                hideLoading();
+                //show
+                $items.css({"opacity" : "1"});
+            });
+        });
+            
+        //other statuses
+        $grid.on( 'last.infiniteScroll', function( event, response, path ) {
+            $('.infinite-scroll-last').css({'display' : 'block', 'opacity' : '1'});
+        });
+            
+        $grid.on( 'error.infiniteScroll', function( event, error, path ) {
+            $('.infinite-scroll-error').css({'display' : 'block', 'opacity' : '1'});
+        });
+            
+    </script>
+</html>

@@ -1,9 +1,27 @@
 # Example Tumblr Grid Layout
 
-Backup of my JS implementation of Masonry and InfiniteScroll combined with ImagesLoaded for tumblr theme creation.
+This repository provides a template and tutorial for building grid layouts for tumblr themes using Masonry, imagesLoaded, Infinite Scroll and Photoset Grid.
 
-Uses Photoset Grid to handle quirks with tumblr's default way of handling photoset posts.
+The template is open source, feel free to use as you wish!
 
-Will combine this HTML/CSS and document plugin versions etc at a later date to make this useful as an example.
+You can find an implementation of this template at: https://examplegridtheme.tumblr.com/
 
-If you stumbled here, the code here is just copy pasted from an old theme of mine. I provide no instructions or way of implementing it for your project right now.
+## The Issue
+The standard Masonry + imagesLoaded implementation doesn't play nice with tumblr's photoset post type. By default, photosets are iframes of varying layouts, and while imagesLoaded fixes issues with loading images throwing off our layouts, it can't help us with the images inside these iframes.
+
+## The Solution
+Tumblr allows us to change this default iframe photoset to one made of images and layout data. Photoset Grid can read the layout data and arrange our images, and imagesLoaded can do its magic.
+
+## Tutorial
+
+Work in progress!
+
+## Credit
+Masonry - https://masonry.desandro.com
+
+Infinite Scrolling - https://infinite-scroll.com/
+
+ImagesLoaded - https://imagesloaded.desandro.com/
+
+Photoset Grid - http://stylehatch.github.io/photoset-grid/
+
