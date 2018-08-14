@@ -16,6 +16,12 @@ Tumblr allows us to change this default iframe photoset to one made of images an
 
 Work in progress!
 
+## Plans
+
+- Neaten and generalize code, it's still pretty much just a copy of a project I worked on a year ago.
+- Add logic to exclude permalink pages from grid layout, example theme is pretty bare bones at the moment.
+- Write tutorial
+
 ## Credit
 Masonry - https://masonry.desandro.com
 
